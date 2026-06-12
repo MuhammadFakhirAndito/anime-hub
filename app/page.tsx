@@ -1,26 +1,11 @@
 import Navbar from "@/components/navbar";
 import Hero from "@/components/hero";
 import AnimeCard from "@/components/animecard";
+import { getTopAnime, Anime } from "@/services/anime";
 
-const dummyAnime = [
-  {
-    title: "Frieren",
-    image: "/featured/frieren.jpg",
-    score: 9.3,
-  },
-  {
-    title: "Solo Leveling",
-    image: "/featured/solo-leveling.jpg",
-    score: 8.8,
-  },
-  {
-    title: "Attack on Titan",
-    image: "/featured/aot.jpg",
-    score: 9.1,
-  },
-];
+export default async function Home() {
+  const trendingAnime = await getTopAnime();
 
-export default function Home() {
   return (
     <main className="min-h-screen bg-slate-950 text-white">
       <div className="container mx-auto px-6">
@@ -33,17 +18,16 @@ export default function Home() {
           </h2>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {dummyAnime.map((anime) => (
+            {trendingAnime.slice(0, 6).map((anime: Anime) => (
               <AnimeCard
-                key={anime.title}
+                key={anime.mal_id}
                 title={anime.title}
-                image={anime.image}
+                image={anime.images.jpg.image_url}
                 score={anime.score}
               />
             ))}
           </div>
         </section>
-
       </div>
     </main>
   );
