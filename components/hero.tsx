@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 const featuredAnime = [
   {
@@ -88,11 +89,12 @@ export default function Hero() {
         <div className="relative w-[300px] h-[380px]">
           <div className="absolute inset-0 bg-violet-500/20 blur-3xl" />
 
-          <img
-            src={currentAnime.image}
-            alt={currentAnime.title}
-            className="relative w-full h-full object-cover rounded-3xl border border-slate-800 shadow-2xl transition-all duration-500"
-          />
+          <Image
+  src={currentAnime.image}
+  alt={currentAnime.title}
+  fill
+  className="object-cover rounded-3xl border border-slate-800 shadow-2xl transition-all duration-500"
+/>
         </div>
       </div>
     </section>
