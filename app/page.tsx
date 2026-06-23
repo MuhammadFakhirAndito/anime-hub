@@ -4,7 +4,15 @@ import AnimeCard from "@/components/animecard";
 import { getTopAnime, Anime } from "@/services/anime";
 
 export default async function Home() {
-  const trendingAnime = await getTopAnime();
+  let trendingAnime: Anime[] = [];
+
+  try {
+    trendingAnime = await getTopAnime();
+  } catch (error) {
+    console.error("Failed to fetch top anime:", error);
+  }
+
+  const hasData = Array.isArray(trendingAnime) && trendingAnime.length > 0;
 
   return (
     <main className="min-h-screen bg-slate-950 text-white">
@@ -17,16 +25,27 @@ export default async function Home() {
             Trending Anime
           </h2>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {trendingAnime.slice(0, 6).map((anime: Anime) => (
-              <AnimeCard
-                key={anime.mal_id}
-                title={anime.title}
-                image={anime.images.jpg.image_url}
-                score={anime.score}
-              />
-            ))}
-          </div>
+          {/* STATE: EMPTY */}
+          {!hasData && (
+            <div className="text-gray-400">
+              No anime data available.
+            </div>
+          )}
+
+          {/* STATE: DATA */}
+          {hasData && (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {trendingAnime.slice(0, 6).map((anime: Anime) => (
+                <AnimeCard
+                  key={anime.mal_id}
+                  id={anime.mal_id}
+                  title={anime.title}
+                  image={anime.images.jpg.image_url}
+                  score={anime.score}
+                />
+              ))}
+            </div>
+          )}
         </section>
       </div>
     </main>

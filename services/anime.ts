@@ -18,3 +18,17 @@ export async function getTopAnime(): Promise<Anime[]> {
 
   return data.data;
 }
+
+export async function getAnimeById(id: string) {
+  const response = await fetch(
+    `https://api.jikan.moe/v4/anime/${id}`
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch anime");
+  }
+
+  const data = await response.json();
+
+  return data.data;
+}
