@@ -1,5 +1,5 @@
-import AnimeCard from "@/components/animecard";
 import { Anime, searchAnime } from "@/services/anime";
+import AnimeGrid from "@/components/animegrid";
 
 type Props = {
   searchParams: Promise<{
@@ -50,17 +50,7 @@ export default async function SearchPage({
         Hasil pencarian: {q}
       </h1>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {anime.map((item) => (
-          <AnimeCard
-            key={item.mal_id}
-            id={item.mal_id}
-            title={item.title}
-            image={item.images.jpg.image_url}
-            score={item.score}
-          />
-        ))}
-      </div>
+      <AnimeGrid anime={anime} />
     </main>
   );
 }

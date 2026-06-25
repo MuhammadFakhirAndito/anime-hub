@@ -1,29 +1,34 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 
 const featuredAnime = [
   {
+    id: 52991,
     title: "Frieren",
     image: "/featured/frieren.jpg",
     description:
       "An immortal mage reflecting on friendship, adventure, and the passage of time.",
   },
   {
+    id: 52299,
     title: "Solo Leveling",
     image: "/featured/solo-leveling.jpg",
     description:
       "The weakest hunter rises to become humanity's strongest warrior.",
   },
   {
-    title: "Attack on Titan",
+    id: 16498,
+    title: "Shingeki No Kyojin",
     image: "/featured/aot.jpg",
     description:
       "Humanity fights for survival against terrifying giant titans.",
   },
   {
-    title: "Demon Slayer",
+    id: 38000,
+    title: "Kimetsu No Yaiba",
     image: "/featured/demon-slayer.jpg",
     description:
       "A young swordsman battles demons to save his sister.",
@@ -61,13 +66,19 @@ export default function Hero() {
         </p>
 
         <div className="flex gap-4 mt-8">
-          <button className="bg-violet-600 px-6 py-3 rounded-xl font-semibold hover:bg-violet-700 transition">
-            Explore Now
-          </button>
+          <Link
+            href="/top-rated"
+            className="bg-violet-600 px-6 py-3 rounded-xl font-semibold hover:bg-violet-700 transition"
+          >
+          Explore Now
+          </Link>
 
-          <button className="border border-slate-700 px-6 py-3 rounded-xl hover:bg-slate-900 transition">
+          <Link
+            href={`/anime/${currentAnime.id}`}
+            className="border border-slate-700 px-6 py-3 rounded-xl hover:bg-slate-900 transition"
+          >
             More Info
-          </button>
+          </Link>
         </div>
 
         <div className="flex gap-2 mt-8">

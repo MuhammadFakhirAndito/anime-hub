@@ -44,3 +44,13 @@ export async function searchAnime(
 
   return data.data;
 }
+
+export async function getTrendingAnime(): Promise<Anime[]> {
+  const response = await fetch(
+    "https://api.jikan.moe/v4/seasons/now"
+  );
+
+  const data = await response.json();
+
+  return data.data;
+}
