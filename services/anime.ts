@@ -32,3 +32,15 @@ export async function getAnimeById(id: string) {
 
   return data.data;
 }
+
+export async function searchAnime(
+  query: string
+): Promise<Anime[]> {
+  const res = await fetch(
+    `https://api.jikan.moe/v4/anime?q=${encodeURIComponent(query)}&limit=12`
+  );
+
+  const data = await res.json();
+
+  return data.data;
+}

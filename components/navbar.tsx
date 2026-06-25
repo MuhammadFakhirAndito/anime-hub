@@ -1,27 +1,54 @@
+import Link from "next/link";
+
 export default function Navbar() {
   return (
     <nav className="flex items-center justify-between py-6">
-      <h1 className="text-2xl font-bold text-violet-500">
+      <Link
+        href="/"
+        className="text-2xl font-bold text-violet-500"
+      >
         Anime Hub
-      </h1>
+      </Link>
 
-      <ul className="hidden md:flex items-center gap-8 text-slate-300">
-        <li className="cursor-pointer hover:text-white">
-          Home
-        </li>
+      <div className="flex items-center gap-4">
+        <form action="/search">
+          <input
+            type="text"
+            name="q"
+            placeholder="Cari anime..."
+            className="rounded-lg bg-slate-800 px-4 py-2 text-white outline-none focus:ring-2 focus:ring-violet-500"
+          />
+        </form>
 
-        <li className="cursor-pointer hover:text-white">
-          Trending
-        </li>
+        <ul className="hidden md:flex items-center gap-8 text-slate-300">
+          <li>
+            <Link
+              href="/"
+              className="hover:text-white"
+            >
+              Home
+            </Link>
+          </li>
 
-        <li className="cursor-pointer hover:text-white">
-          Top Rated
-        </li>
+          <li>
+            <Link
+              href="/trending"
+              className="hover:text-white"
+            >
+              Trending
+            </Link>
+          </li>
 
-        <li className="cursor-pointer hover:text-white">
-          Search
-        </li>
-      </ul>
+          <li>
+            <Link
+              href="/top-rated"
+              className="hover:text-white"
+            >
+              Top Rated
+            </Link>
+          </li>
+        </ul>
+      </div>
     </nav>
   );
 }
