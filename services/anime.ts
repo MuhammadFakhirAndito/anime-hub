@@ -2,6 +2,7 @@ export type Anime = {
   mal_id: number;
   title: string;
   score: number;
+  rating?: string;
   images: {
     jpg: {
       image_url: string;
@@ -16,7 +17,7 @@ export async function getTopAnime(): Promise<Anime[]> {
 
   const data = await response.json();
 
-  return data.data;
+  return filterSafeAnime(data.data);
 }
 
 export async function getAnimeById(id: string) {
@@ -42,7 +43,7 @@ export async function searchAnime(
 
   const data = await res.json();
 
-  return data.data;
+  return filterSafeAnime(data.data);
 }
 
 export async function getTrendingAnime(): Promise<Anime[]> {
@@ -52,5 +53,13 @@ export async function getTrendingAnime(): Promise<Anime[]> {
 
   const data = await response.json();
 
-  return data.data;
+  return filterSafeAnime(data.data);
+}
+
+function filterSafeAnime(anime: Anime[]): Anime[] {
+  return anime.filter(
+    (item) =>
+      item.rating !== "Rx - Hentai" &&
+      item.rating !== "R+ - Mild Nudity"
+  );
 }
