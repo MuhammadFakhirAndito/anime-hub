@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import FavoriteButton from "./favoritebutton";
 
 type AnimeCardProps = {
   id: number;
@@ -31,6 +32,17 @@ export default function AnimeCard({
           </div>
 
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+
+          <div className="absolute top-3 left-3 z-10">
+          <FavoriteButton
+          anime={{
+          mal_id: id,
+          title,
+          image,
+          score,
+          }}
+          />
+        </div>
         </div>
 
         <div className="p-4">
@@ -38,7 +50,6 @@ export default function AnimeCard({
             {title}
           </h3>
         </div>
-
       </div>
     </Link>
   );

@@ -10,6 +10,28 @@ export type Anime = {
   };
 };
 
+function removeDuplicates(
+  anime: Anime[]
+): Anime[] {
+  return anime.filter(
+    (item, index, self) =>
+      index ===
+      self.findIndex(
+        (a) => a.mal_id === item.mal_id
+      )
+  );
+}
+
+function filterSafeAnime(
+  anime: Anime[]
+): Anime[] {
+  return anime.filter(
+    (item) =>
+      item.rating !== "Rx - Hentai" &&
+      item.rating !== "R+ - Mild Nudity"
+  );
+}
+
 export async function getTopAnime(): Promise<Anime[]> {
   const response = await fetch(
     "https://api.jikan.moe/v4/top/anime"
@@ -17,10 +39,42 @@ export async function getTopAnime(): Promise<Anime[]> {
 
   const data = await response.json();
 
-  return filterSafeAnime(data.data);
+  return filterSafeAnime(
+    removeDuplicates(data.data)
+  );
 }
 
-export async function getAnimeById(id: string) {
+export async function getTrendingAnime(): Promise<Anime[]> {
+  const response = await fetch(
+    "https://api.jikan.moe/v4/seasons/now"
+  );
+
+  const data = await response.json();
+
+  return filterSafeAnime(
+    removeDuplicates(data.data)
+  );
+}
+
+export async function searchAnime(
+  query: string
+): Promise<Anime[]> {
+  const response = await fetch(
+    `https://api.jikan.moe/v4/anime?q=${encodeURIComponent(
+      query
+    )}&limit=12`
+  );
+
+  const data = await response.json();
+
+  return filterSafeAnime(
+    removeDuplicates(data.data)
+  );
+}
+
+export async function getAnimeById(
+  id: string
+) {
   const response = await fetch(
     `https://api.jikan.moe/v4/anime/${id}`
   );
@@ -32,34 +86,4 @@ export async function getAnimeById(id: string) {
   const data = await response.json();
 
   return data.data;
-}
-
-export async function searchAnime(
-  query: string
-): Promise<Anime[]> {
-  const res = await fetch(
-    `https://api.jikan.moe/v4/anime?q=${encodeURIComponent(query)}&limit=12`
-  );
-
-  const data = await res.json();
-
-  return filterSafeAnime(data.data);
-}
-
-export async function getTrendingAnime(): Promise<Anime[]> {
-  const response = await fetch(
-    "https://api.jikan.moe/v4/seasons/now"
-  );
-
-  const data = await response.json();
-
-  return filterSafeAnime(data.data);
-}
-
-function filterSafeAnime(anime: Anime[]): Anime[] {
-  return anime.filter(
-    (item) =>
-      item.rating !== "Rx - Hentai" &&
-      item.rating !== "R+ - Mild Nudity"
-  );
 }

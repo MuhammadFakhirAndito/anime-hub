@@ -47,6 +47,15 @@ export default function Navbar() {
               Top Rated
             </Link>
           </li>
+
+          <li>
+            <Link
+              href="/favorites"
+              className="hover:text-white"
+            >
+              Favorites
+            </Link>
+          </li>
         </ul>
       </div>
     </nav>
